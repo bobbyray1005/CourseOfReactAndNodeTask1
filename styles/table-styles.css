@@ -1,0 +1,67 @@
+table{
+    display: block;
+    width: 100%;
+    border-spacing: 0 0.5em;
+    max-height: 50vmax;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+tr th{
+    color: ghostwhite;
+    background-color: cadetblue;
+}
+tr td{
+    background-color: #b6d7d7;
+}
+th, td{
+    padding: 1em;
+    text-align: left;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+tr td:first-child, tr th:first-child{
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
+tr td:last-child, tr th:last-child{
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+.category-icon{
+    width: 5%;
+    min-width: 1em;
+    max-width: 2em;
+}
+.name{
+    width: 20%;
+    /*min-width: 20%;*/
+    /*max-width: 20%;*/
+}
+.created, .category1, .dates{
+    width: 15%;
+}
+.header-icon{
+    width: 4%;
+    fill: ghostwhite;
+}
+.header-icon svg {
+    width: 1.5em;
+    height: 1.5em;
+}
+.category-icon svg {
+    width: 2em;
+    height: 2em;
+}
+.category2 {
+    width: 50%;
+}
+.active, .archived{
+    width: 20%;
+}
+@media screen and (max-width: 800px) {
+    .created, .dates{
+        display: none;
+    }
+}

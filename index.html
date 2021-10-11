@@ -4,22 +4,50 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/table-styles.css">
+    <link rel="stylesheet" href="styles/form-styles.css">
 </head>
 <body>
     <header>
-        <h1>Task 1 | Notes app</h1>
+        <h1>Hometask #1 | JavaScript</h1>
     </header>
     <main>
-        <table id="active-archive-table">
-
+        <table>
+            <thead>
+                <tr>
+                    <th class="col category-icon">&nbsp;</th>
+                    <th class="col name">Name</th>
+                    <th class="col created">Created</th>
+                    <th class="col category1">Category</th>
+                    <th class="col content">Content</th>
+                    <th class="col dates">Dates</th>
+                    <th class="col header-icon">&nbsp;</th>
+                    <th class="col header-icon archive" onclick="switchTables()"></th>
+                    <th class="col header-icon delete"></th>
+                </tr>
+            </thead>
+            <tbody id="active-archive-table"></tbody>
         </table>
-        <div>
 
+        <div id="create-note">
+            <button>Create Note</button>
         </div>
-        <table id="stats-table">
 
+        <table>
+            <thead>
+                <tr>
+                    <th class="category-icon">&nbsp;</th>
+                    <th class="category2">Note Category</th>
+                    <th class="active">Active</th>
+                    <th class="archived">Archived</th>
+                </tr>
+            </thead>
+            <tbody id="stats-table"></tbody>
         </table>
     </main>
+
+    <script src="scripts/svgs.js"></script>
     <script src="scripts/data.js"></script>
     <script src="scripts/HTMLBuilder.js"></script>
     <script src="scripts/functions.js"></script>

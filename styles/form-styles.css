@@ -1,0 +1,11 @@
+#create-note{
+    margin: 2em 0;
+    display: flex;
+    justify-content: end;
+}
+#create-note button{
+    padding: 1em;
+    border-radius: 0.5em;
+    background-color: #b6d7d7;
+    border: 1px solid cadetblue;
+}

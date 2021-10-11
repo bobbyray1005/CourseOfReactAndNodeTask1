@@ -1,10 +1,10 @@
 let notes = [
     {
-        name: ,
-        created: ,
-        category: ,
-        content: ,
-        dates: ,
-        archived:
+        name: "",
+        created: "",
+        category: "",
+        content: "",
+        dates: "",
+        archived: false
     },
 ]
