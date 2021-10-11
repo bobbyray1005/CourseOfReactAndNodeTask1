@@ -60,10 +60,4 @@ let unarchiveIcon = `<?xml version="1.0" standalone="no"?>
 </g>
 </svg>`;
 
-Array.from(document.getElementsByClassName('header-icon')).forEach(col => {
-    if (col.classList.contains('archive'))
-        col.innerHTML = archiveIcon;
-    if (col.classList.contains('delete'))
-        col.innerHTML = deleteIcon;
-    // Array.from(col.getElementsByTagName('path')).forEach( path => path.classList.add('header-icon'));
-});
+export { archiveIcon, unarchiveIcon, editIcon, deleteIcon, ideaIcon, quoteIcon, taskIcon, thoughtIcon }
