@@ -1,4 +1,5 @@
 import { notes, categories, icons } from './data.js';
+import { makeID, getDatesFromText } from "./functions.js";
 // import { makeID } from "./functions";
 
 let statisticsTable = document.getElementById('stats-table'),
@@ -20,15 +21,34 @@ function buildForm(name, created, category, content){
 
     form.innerHTML = `
         <input type="text" name="name" value="${typeof name === "string"? name : ''}" placeholder="Name">
-        <input type="date" name="date" value="${created}">
+<!--        <input type="date" name="date" value="${created}">-->
         <select name="categories">
-        ` + categories.map(c => `<option value="${c}">${c}</option>`) + `
+        ` + Object.keys(categories).map(c => `<option value="${c}">${c}</option>`) + `
         </select>
         <input type="text" name="content" value="${content? content : ''}" placeholder="Content">
-        <button type="submit" >Submit</button> 
+        <input type="submit" value="Submit"> 
     `;
 
-    document.body.append(form);
+    form.onsubmit = (event)=>{
+        event.preventDefault();
+
+        createNote({
+            id: makeID(10),
+            name: event.target.name.value,
+            created: new Date(),
+            category: event.target.categories.value,
+            content: event.target.content.value,
+            dates: getDatesFromText(event.target.content.value),
+            archived: false
+        });
+    };
+
+
+    let wrapperDiv = document.createElement('div');
+    wrapperDiv.className = 'wrapper-div';
+    wrapperDiv.append(form);
+
+    document.body.append(wrapperDiv);
 }
 
 //Note function
@@ -94,7 +114,7 @@ function buildStatisticTable(){
 function buildStatTr(category, active, total){
     return `
         <tr>
-            <td className="category-icon">${ categories[category] }</td>
+            <td className="category-icon stats-icon">${ categories[category] }</td>
             <td className="category2">${ category }</td>
             <td className="active">${ active }</td>
             <td className="archived">${ total-active }</td>

@@ -34,6 +34,18 @@ tr td:last-child, tr th:last-child{
     /*min-width: 1.5em;*/
     min-width: 2em;
 }
+.stats-icon td {
+    width: 4%;
+    /*fill: ghostwhite;*/
+    min-width: 1.5em;
+    min-height: 1.5em;
+    max-width: 3em;
+}
+.stats-icon svg{
+    width: 2em;
+    height: 2em;
+    min-width: 3em;
+}
 .name{
     width: 20%;
     /*min-width: 20%;*/
@@ -61,6 +73,12 @@ tr td:last-child, tr th:last-child{
 }
 .active, .archived{
     width: 20%;
+}
+.category-icon, svg{
+    width: 2em;
+    height: 2em;
+    max-width: 2em;
+    max-height: 2em;
 }
 @media screen and (max-width: 800px) {
     .created, .dates{
