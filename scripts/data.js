@@ -53,7 +53,7 @@ export let notes = [
         category: "Quote",
         content: "Power doesn't come with bla bla bla",
         dates: "",
-        archived: false
+        archived: true
     },
     {
         id: "LI_RUnkMNo",
@@ -62,7 +62,7 @@ export let notes = [
         category: "Task",
         content: "The Lean Statrup",
         dates: "",
-        archived: false
+        archived: true
     },
     // {
     //     name: "",

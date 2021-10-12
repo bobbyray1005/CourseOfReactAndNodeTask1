@@ -1,7 +1,4 @@
-import {
-    loadIconsIntoHeader,
-    notes
-} from './scripts/HTMLBuilder.js';
+import { loadIconsIntoHeader, refreshTables } from './scripts/HTMLBuilder.js';
 
-loadIconsIntoHeader( );
-
+loadIconsIntoHeader();
+refreshTables();

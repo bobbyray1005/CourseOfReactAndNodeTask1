@@ -1,9 +1,11 @@
 import { notes, categories, icons } from './data.js';
-import { makeID, getDatesFromText } from "./functions.js";
-// import { makeID } from "./functions";
+import { makeRandomID, getDatesFromText } from "./functions.js";
+
 
 let statisticsTable = document.getElementById('stats-table'),
     notesTable = document.getElementById('active-archive-table');
+
+let activeNoteTableShown = true;
 
 
 function loadIconsIntoHeader(){
@@ -31,16 +33,19 @@ function buildForm(name, created, category, content){
 
     form.onsubmit = (event)=>{
         event.preventDefault();
-
-        createNote({
-            id: makeID(10),
+        let note = {
+            id: makeRandomID(10),
             name: event.target.name.value,
             created: new Date(),
             category: event.target.categories.value,
             content: event.target.content.value,
             dates: getDatesFromText(event.target.content.value),
             archived: false
-        });
+        }
+
+        createNote(note);
+
+        document.getElementsByClassName('wrapper-div')[0].remove();
     };
 
 
@@ -68,11 +73,11 @@ function deleteNote(noteID){
 
 function refreshTables(){
     clearAllTables();
+    buildNotesTable();
     buildStatisticTable();
-    // buildNotesTable();
 }
 function clearAllTables(){
-    // clearInnerHTML(notesTable);
+    clearInnerHTML(notesTable);
     clearInnerHTML(statisticsTable);
 }
 function clearInnerHTML(parent){
@@ -123,7 +128,26 @@ function buildStatTr(category, active, total){
 }
 
 function buildNotesTable(){
+    notes.forEach(note => {
+        if (!note.archived === activeNoteTableShown)
+            notesTable.innerHTML += buildNotesTr(note);
+    })
 
+}
+function buildNotesTr(note){
+    return `
+        <tr>
+            <td className="category-icon">${ categories[note.category] }</td>
+            <td className="name">${ note.name }</td>
+            <td className="created">${ note.created.toLocaleDateString() }</td>
+            <td className="category1">${ note.category }</td>
+            <td className="content">${ note.content }</td>
+            <td className="dates">${ note.dates }</td>
+            <td className="row-icon edit"></td>
+            <td className="row-icon archive"></td>
+            <td className="row-icon delete"></td>
+        </tr>
+    `;
 }
 
 export {
@@ -132,6 +156,13 @@ export {
     notes
 }
 
+function switchTables() {
+    activeNoteTableShown = !activeNoteTableShown;
+    clearInnerHTML(notesTable);
+    buildNotesTable();
+    document.getElementsByClassName('header-icon archive')[0].innerHTML = (activeNoteTableShown)? icons.ARCHIVE_ICON : icons.UNARCHIVE_ICON;
+}
 
+document.getElementById("table-switcher").addEventListener("click", switchTables);
 document.getElementById("create-note-button").addEventListener("click", buildForm);
-document.getElementById("build-stats").addEventListener("click", refreshTables);
+// document.getElementById("build-stats").addEventListener("click", refreshTables);
