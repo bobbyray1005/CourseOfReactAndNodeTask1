@@ -1,8 +1,13 @@
-// import { archiveIcon, unarchiveIcon, editIcon, deleteIcon, ideaIcon, quoteIcon, taskIcon, thoughtIcon } from './svgs';
-import * as icons from './scripts/svgs.js';
-import { loadDataIntoTables, loadIconsIntoHeader } from './scripts/functions.js';
+import { archiveIcon, unarchiveIcon, editIcon, deleteIcon, ideaIcon, quoteIcon, taskIcon, thoughtIcon } from './scripts/svgs.js';
+// import *  from './scripts/svgs.js';
+import { loadDataIntoTables,
+    loadIconsIntoHeader,
+    switchTables,
+    refreshTables,
+    openForm,
+    loadLocalData} from './scripts/functions.js';
+import { buildForm } from './scripts/HTMLBuilder.js';
 
-
-loadIconsIntoHeader( icons.archiveIcon, icons.deleteIcon );
+loadIconsIntoHeader( archiveIcon, deleteIcon );
 
 loadDataIntoTables();

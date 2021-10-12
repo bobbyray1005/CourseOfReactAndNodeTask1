@@ -16,22 +16,25 @@
         <table>
             <thead>
                 <tr>
-                    <th class="col category-icon">&nbsp;</th>
-                    <th class="col name">Name</th>
-                    <th class="col created">Created</th>
-                    <th class="col category1">Category</th>
-                    <th class="col content">Content</th>
-                    <th class="col dates">Dates</th>
-                    <th class="col header-icon">&nbsp;</th>
-                    <th class="col header-icon archive" onclick="switchTables()"></th>
-                    <th class="col header-icon delete"></th>
+                    <th class="category-icon">&nbsp;</th>
+                    <th class="name">Name</th>
+                    <th class="created">Created</th>
+                    <th class="category1">Category</th>
+                    <th class="content">Content</th>
+                    <th class="dates">Dates</th>
+                    <th class="header-icon">&nbsp;</th>
+                    <th class="header-icon archive" onclick="switchTables()"></th>
+                    <th class="header-icon delete"></th>
                 </tr>
             </thead>
             <tbody id="active-archive-table"></tbody>
         </table>
 
+        <script  type="module" src="mainThread.js" defer></script>
         <div id="create-note">
-            <button>Create Note</button>
+            <button onclick="buildForm()">Build form</button>
+            <button onclick="loadLocalData()">Load local data</button>
+            <button id="create-note-button">Create Note</button>
         </div>
 
         <table>
@@ -47,11 +50,5 @@
         </table>
     </main>
 
-    <script  type="module" src="mainThread.js"></script>
-<!--    <script type="module" src="scripts/svgs.js"></script>-->
-<!--    <script src="scripts/data.js"></script>-->
-<!--    <script src="scripts/HTMLBuilder.js"></script>-->
-<!--    <script type="module" src="scripts/functions.js"></script>-->
-<!--    <script src="scripts/form.js"></script>-->
 </body>
 </html>

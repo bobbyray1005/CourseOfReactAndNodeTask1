@@ -31,8 +31,8 @@ tr td:last-child, tr th:last-child{
 }
 .category-icon{
     width: 5%;
-    min-width: 1em;
-    max-width: 2em;
+    /*min-width: 1.5em;*/
+    min-width: 2em;
 }
 .name{
     width: 20%;
@@ -45,6 +45,8 @@ tr td:last-child, tr th:last-child{
 .header-icon{
     width: 4%;
     fill: ghostwhite;
+    min-width: 1.5em;
+    min-height: 1.5em;
 }
 .header-icon svg {
     width: 1.5em;

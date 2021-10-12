@@ -3,6 +3,9 @@
     display: flex;
     justify-content: end;
 }
+#create-note *{
+    margin-left: 2em;
+}
 #create-note button{
     padding: 1em;
     border-radius: 0.5em;

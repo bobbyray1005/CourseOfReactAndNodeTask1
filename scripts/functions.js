@@ -1,7 +1,18 @@
 function loadDataIntoTables(){
 
 }
+function switchTables(){
 
+}
+function loadLocalData(){
+
+}
+function openForm(){
+
+}
+function refreshTables(){
+
+}
 function loadIconsIntoHeader(archiveIcon, deleteIcon){
     Array.from(document.getElementsByClassName('header-icon')).forEach(col => {
         if (col.classList.contains('archive'))
@@ -14,5 +25,9 @@ function loadIconsIntoHeader(archiveIcon, deleteIcon){
 
 export {
     loadDataIntoTables,
-    loadIconsIntoHeader
+    loadIconsIntoHeader,
+    switchTables,
+    refreshTables,
+    openForm,
+    loadLocalData
 }
