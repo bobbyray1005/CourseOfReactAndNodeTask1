@@ -171,7 +171,6 @@ function buildNotesTr(note){
 
     tr.append(tdEdit, tdArchive, tdDelete);
     return tr;
-
 }
 
 export {
