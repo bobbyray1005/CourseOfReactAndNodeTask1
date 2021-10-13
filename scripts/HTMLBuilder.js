@@ -18,32 +18,34 @@ function loadIconsIntoHeader(){
     });
 }
 
-function buildForm(name, created, category, content){
+function buildForm(note){
     let form = document.createElement('form');
 
     form.innerHTML = `
-        <input type="text" name="name" value="${typeof name === "string"? name : ''}" placeholder="Name">
-<!--        <input type="date" name="date" value="${created}">-->
+        <input type="text" name="name" value="${typeof note.name === "string"? note.name : ''}" placeholder="Name">
         <select name="categories">
-        ` + Object.keys(categories).map(c => `<option value="${c}">${c}</option>`) + `
+        ` + Object.keys(categories).map(c => `<option value="${c}" ${note.category === c? 'selected' : ''}>${c}</option>`) + `
         </select>
-        <input type="text" name="content" value="${content? content : ''}" placeholder="Content">
+        <input type="text" name="content" value="${note.content? note.content : ''}" placeholder="Content">
         <input type="submit" value="Submit"> 
     `;
 
     form.onsubmit = (event)=>{
         event.preventDefault();
-        let note = {
-            id: makeRandomID(10),
+        let newNote = {
+            id: (note)? note.id : makeRandomID(10),
             name: event.target.name.value,
-            created: new Date(),
+            created: (note)? note.created : new Date(),
             category: event.target.categories.value,
             content: event.target.content.value,
             dates: getDatesFromText(event.target.content.value),
-            archived: false
+            archived: (note)? note.archived : false
         }
 
-        createNote(note);
+        if (typeof note.name === "string")
+            updateNote(newNote);
+        else
+            createNote(newNote);
 
         document.getElementsByClassName('wrapper-div')[0].remove();
     };
@@ -62,14 +64,19 @@ function createNote(note){
     refreshTables();
 }
 function updateNote(note){
-    notes.push(note);
+    notes.splice(notes.findIndex(n => n.id === note.id),1, note);
     refreshTables();
 }
 function deleteNote(noteID){
-    notes = notes.filter(note => note.id !== noteID);
+    notes.splice(notes.indexOf(notes.find(note => note.id === noteID)),1);
     document.getElementById(noteID).remove();
+    clearInnerHTML(statisticsTable);
+    buildStatisticTable();
 }
-
+function changeArchiveState(note){
+    notes[notes.findIndex(n => n.id === note.id)].archived = !notes[notes.findIndex(n => n.id === note.id)].archived;
+    refreshTables()
+}
 
 function refreshTables(){
     clearAllTables();
@@ -130,24 +137,41 @@ function buildStatTr(category, active, total){
 function buildNotesTable(){
     notes.forEach(note => {
         if (!note.archived === activeNoteTableShown)
-            notesTable.innerHTML += buildNotesTr(note);
+            notesTable.append( buildNotesTr(note) );
     })
 
 }
+
 function buildNotesTr(note){
-    return `
-        <tr>
+    let tr = document.createElement('tr');
+    tr.id = note.id;
+    tr.innerHTML = `
             <td className="category-icon">${ categories[note.category] }</td>
             <td className="name">${ note.name }</td>
             <td className="created">${ note.created.toLocaleDateString() }</td>
             <td className="category1">${ note.category }</td>
             <td className="content">${ note.content }</td>
             <td className="dates">${ note.dates }</td>
-            <td className="row-icon edit"></td>
-            <td className="row-icon archive"></td>
-            <td className="row-icon delete"></td>
-        </tr>
     `;
+    let tdEdit = document.createElement('td'),
+        tdArchive = document.createElement('td'),
+        tdDelete = document.createElement('td');
+
+    tdEdit.className = "row-icon edit";
+    tdEdit.addEventListener("click", ()=>{ buildForm(note) });
+    tdEdit.innerHTML = icons.EDIT_ICON;
+
+    tdArchive.className = "row-icon archive";
+    tdArchive.addEventListener("click", ()=>{ changeArchiveState(note) });
+    tdArchive.innerHTML = (activeNoteTableShown)? icons.UNARCHIVE_ICON : icons.ARCHIVE_ICON;
+
+    tdDelete.className = "row-icon delete";
+    tdDelete.addEventListener("click", ()=>{ deleteNote(note.id) });
+    tdDelete.innerHTML = icons.DELETE_ICON;
+
+    tr.append(tdEdit, tdArchive, tdDelete);
+    return tr;
+
 }
 
 export {
