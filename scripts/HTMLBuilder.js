@@ -1,45 +1,78 @@
 import { notes, categories, icons } from './data.js';
 import { makeRandomID, getDatesFromText } from "./functions.js";
 
-
 let statisticsTable = document.getElementById('stats-table'),
-    notesTable = document.getElementById('active-archive-table');
+    notesTable = document.getElementById('active-archive-table'),
+    activeNoteTableShown = true;
 
-let activeNoteTableShown = true;
-
-
+//dynamic loading svg icons so they could be styled
 function loadIconsIntoHeader(){
     Array.from(document.getElementsByClassName('header-icon')).forEach(col => {
         if (col.classList.contains('archive'))
             col.innerHTML = icons.ARCHIVE_ICON;
         if (col.classList.contains('delete'))
             col.innerHTML = icons.DELETE_ICON;
-        // Array.from(col.getElementsByTagName('path')).forEach( path => path.classList.add('header-icon'));
     });
+}
+
+//Note function
+function createNote(note){
+    notes.push(note);
+    refreshTables();
+    showAnnouncer('Note created successfully!');
+}
+function updateNote(note){
+    notes.splice(notes.findIndex(n => n.id === note.id),1, note);
+    refreshTables();
+    showAnnouncer('Note updated successfully!');
+}
+function deleteNote(noteID){
+    notes.splice(notes.indexOf(notes.find(note => note.id === noteID)),1);
+    document.getElementById(noteID).remove();
+    clearInnerHTML(statisticsTable);
+    buildStatisticTable();
+    showAnnouncer('Note deleted successfully!');
+}
+function changeArchiveState(note){
+    notes[notes.findIndex(n => n.id === note.id)].archived = !notes[notes.findIndex(n => n.id === note.id)].archived;
+    refreshTables()
+    showAnnouncer(`Note ${(activeNoteTableShown)? 'archived' : 'unarchived'} successfully!`);
+}
+
+//announcer for users activity
+function showAnnouncer(text){
+    let announcer = document.getElementById('announcer')
+    announcer.style.opacity = '1';
+    announcer.innerText = text;
+    setTimeout(()=>{ announcer.style.opacity = '0' }, 1500);
 }
 
 function buildForm(note){
     let form = document.createElement('form');
 
     form.innerHTML = `
-        <input type="text" name="name" value="${typeof note.name === "string"? note.name : ''}" placeholder="Name">
+        <input type="text" name="name" value="${typeof note.name === "string"? note.name : ''}" placeholder="Name" required>
         <select name="categories">
         ` + Object.keys(categories).map(c => `<option value="${c}" ${note.category === c? 'selected' : ''}>${c}</option>`) + `
         </select>
-        <input type="text" name="content" value="${note.content? note.content : ''}" placeholder="Content">
-        <input type="submit" value="Submit"> 
+        <textarea name="content" placeholder="Content">${note.content? note.content : ''}</textarea>
+        <input class="cancel" type="button" value="Cancel">
+        <input id="submit-button" type="submit" value="Submit" > 
     `;
+    form.getElementsByClassName('cancel')[0].addEventListener("click", ()=>{
+        document.getElementsByClassName('wrapper-div')[0].remove();
+    });
 
     form.onsubmit = (event)=>{
         event.preventDefault();
         let newNote = {
-            id: (note)? note.id : makeRandomID(10),
+            id: (typeof note.name === "string")? note.id : makeRandomID(10),
             name: event.target.name.value,
-            created: (note)? note.created : new Date(),
+            created: (typeof note.name === "string")? note.created : new Date(),
             category: event.target.categories.value,
             content: event.target.content.value,
             dates: getDatesFromText(event.target.content.value),
-            archived: (note)? note.archived : false
+            archived: (typeof note.name === "string")? note.archived : false
         }
 
         if (typeof note.name === "string")
@@ -55,29 +88,10 @@ function buildForm(note){
     wrapperDiv.className = 'wrapper-div';
     wrapperDiv.append(form);
 
-    document.body.append(wrapperDiv);
+    document.body.prepend(wrapperDiv);
 }
 
-//Note function
-function createNote(note){
-    notes.push(note);
-    refreshTables();
-}
-function updateNote(note){
-    notes.splice(notes.findIndex(n => n.id === note.id),1, note);
-    refreshTables();
-}
-function deleteNote(noteID){
-    notes.splice(notes.indexOf(notes.find(note => note.id === noteID)),1);
-    document.getElementById(noteID).remove();
-    clearInnerHTML(statisticsTable);
-    buildStatisticTable();
-}
-function changeArchiveState(note){
-    notes[notes.findIndex(n => n.id === note.id)].archived = !notes[notes.findIndex(n => n.id === note.id)].archived;
-    refreshTables()
-}
-
+//table functions
 function refreshTables(){
     clearAllTables();
     buildNotesTable();
@@ -133,15 +147,12 @@ function buildStatTr(category, active, total){
         </tr>
     `;
 }
-
 function buildNotesTable(){
     notes.forEach(note => {
         if (!note.archived === activeNoteTableShown)
             notesTable.append( buildNotesTr(note) );
     })
-
 }
-
 function buildNotesTr(note){
     let tr = document.createElement('tr');
     tr.id = note.id;
@@ -163,7 +174,7 @@ function buildNotesTr(note){
 
     tdArchive.className = "row-icon archive";
     tdArchive.addEventListener("click", ()=>{ changeArchiveState(note) });
-    tdArchive.innerHTML = (activeNoteTableShown)? icons.UNARCHIVE_ICON : icons.ARCHIVE_ICON;
+    tdArchive.innerHTML = (activeNoteTableShown)? icons.ARCHIVE_ICON : icons.UNARCHIVE_ICON ;
 
     tdDelete.className = "row-icon delete";
     tdDelete.addEventListener("click", ()=>{ deleteNote(note.id) });
@@ -173,19 +184,21 @@ function buildNotesTr(note){
     return tr;
 }
 
+
+function switchTables() {
+    activeNoteTableShown = !activeNoteTableShown;
+    clearInnerHTML(notesTable);
+    buildNotesTable();
+    document.getElementById('table-name').innerText = activeNoteTableShown? "Active notes" : "Archived notes";
+    document.getElementsByClassName('header-icon archive')[0].innerHTML = (activeNoteTableShown)? icons.ARCHIVE_ICON : icons.UNARCHIVE_ICON;
+}
+
 export {
     refreshTables,
     loadIconsIntoHeader,
     notes
 }
 
-function switchTables() {
-    activeNoteTableShown = !activeNoteTableShown;
-    clearInnerHTML(notesTable);
-    buildNotesTable();
-    document.getElementsByClassName('header-icon archive')[0].innerHTML = (activeNoteTableShown)? icons.ARCHIVE_ICON : icons.UNARCHIVE_ICON;
-}
-
 document.getElementById("table-switcher").addEventListener("click", switchTables);
 document.getElementById("create-note-button").addEventListener("click", buildForm);
-// document.getElementById("build-stats").addEventListener("click", refreshTables);
+

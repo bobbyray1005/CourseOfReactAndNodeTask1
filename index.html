@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="styles/general.css">
-    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/table-styles.css">
     <link rel="stylesheet" href="styles/form-styles.css">
 </head>
@@ -13,15 +12,27 @@
         <h1>Hometask #1 | JavaScript</h1>
     </header>
     <main>
+        <h3 id="table-name">Active notes</h3>
         <table>
+            <colgroup>
+                <col class="category-icon">
+                <col class="name">
+                <col class="created">
+                <col class="category1">
+                <col class="content">
+                <col class="dates">
+                <col class="active-icon">
+                <col class="active-icon">
+                <col class="active-icon">
+            </colgroup>
             <thead>
                 <tr>
-                    <th class="category-icon">&nbsp;</th>
-                    <th class="name">Name</th>
-                    <th class="created">Created</th>
-                    <th class="category1">Category</th>
-                    <th class="content">Content</th>
-                    <th class="dates">Dates</th>
+                    <th>&nbsp;</th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Category</th>
+                    <th>Content</th>
+                    <th>Dates</th>
                     <th class="header-icon">&nbsp;</th>
                     <th class="header-icon archive" id="table-switcher"></th>
                     <th class="header-icon delete"></th>
@@ -32,16 +43,24 @@
 
 
         <div id="create-note">
+            <div id="announcer"></div>
             <button id="create-note-button">Create Note</button>
         </div>
 
         <table>
+
+            <colgroup>
+                <col class="category-icon">
+                <col class="category2">
+                <col class="active">
+                <col class="archived">
+            </colgroup>
             <thead>
                 <tr>
-                    <th class="stats-icon">&nbsp;</th>
-                    <th class="category2">Note Category</th>
-                    <th class="active">Active</th>
-                    <th class="archived">Archived</th>
+                    <th>&nbsp;</th>
+                    <th>Note Category</th>
+                    <th>Active</th>
+                    <th>Archived</th>
                 </tr>
             </thead>
             <tbody id="stats-table"></tbody>

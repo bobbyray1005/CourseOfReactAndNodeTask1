@@ -5,17 +5,20 @@
 }
 #create-note *{
     margin-left: 2em;
+    padding: 1em;
+    background-color: #b6d7d7;
+    border-radius: 0.5em;
+}
+#create-note div{
+    opacity:  0;
+    transition: opacity 1s;
 }
 #create-note button{
-    padding: 1em;
-    border-radius: 0.5em;
-    background-color: #b6d7d7;
     border: 1px solid cadetblue;
 }
 .wrapper-div{
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -42,8 +45,17 @@ form{
 form > *:not(:last-child){
     margin-bottom: 0.5em;
 }
-input, select{
+input, select, textarea{
     width: 100%;
+    max-width: 100%;
     padding: 10px;
-
+}
+textarea{
+    min-width: 100%;
+    min-height: 4em;
+    max-height: 12em;
+}
+.invalid-input{
+    border-color: crimson;
+    background-color: rgba(220,20,60,0.5);
 }
