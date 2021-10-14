@@ -22,16 +22,32 @@ function createNote(note){
     showAnnouncer('Note created successfully!');
 }
 function updateNote(note){
-    notes.splice(notes.findIndex(n => n.id === note.id),1, note);
-    refreshTables();
-    showAnnouncer('Note updated successfully!');
+    try{
+        let index = notes.findIndex(n => n.id === note.id);
+        if (index < 0)
+            throw "There is no such note!";
+        notes.splice(index,1, note);
+        refreshTables();
+        showAnnouncer('Note updated successfully!');
+    } catch (e){
+        console.error(e);
+        showAnnouncer("Note wasn't updated!", true);
+    }
 }
 function deleteNote(noteID){
-    notes.splice(notes.indexOf(notes.find(note => note.id === noteID)),1);
-    document.getElementById(noteID).remove();
-    clearInnerHTML(statisticsTable);
-    buildStatisticTable();
-    showAnnouncer('Note deleted successfully!');
+    try {
+        let index = notes.findIndex(n => n.id === noteID);
+        if (index < 0)
+            throw "There is no such note!";
+        notes.splice(index,1);
+        document.getElementById(noteID).remove();
+        clearInnerHTML(statisticsTable);
+        buildStatisticTable();
+        showAnnouncer('Note deleted successfully!');
+    } catch (e){
+        console.error(e);
+        showAnnouncer("Note wasn't updated!", true);
+    }
 }
 function changeArchiveState(note){
     notes[notes.findIndex(n => n.id === note.id)].archived = !notes[notes.findIndex(n => n.id === note.id)].archived;
@@ -40,11 +56,17 @@ function changeArchiveState(note){
 }
 
 //announcer for users activity
-function showAnnouncer(text){
+function showAnnouncer(text, error){
     let announcer = document.getElementById('announcer')
     announcer.style.opacity = '1';
     announcer.innerText = text;
-    setTimeout(()=>{ announcer.style.opacity = '0' }, 1500);
+    if (error)
+        announcer.classList.add('invalid-input');
+    setTimeout(()=>{
+        announcer.style.opacity = '0';
+        if (error)
+            announcer.classList.remove('invalid-input');
+    }, 1500);
 }
 
 function buildForm(note){
