@@ -10,7 +10,7 @@ Hometask #1 | JavaScript
 - [x] 6. There is no need to implement data storage. Simply create a JS variable which stores the data and prepopulate it with 7 notes so that they are shown when the page is reloaded.
 - [x] 7. Aim to write clean code. 
 - [ ]   - Write small functions, [pure functions](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976).
-- [ ]  - Adhere to the [single responsibility principle](https://dev-gang.ru/article/solid-%C2%ABs%C2%BB-princip-edinstvennoi-objazannosti-lblgrj8yjb/). Separate the logic of rendering and data processing, ideally to separate files.
+- [ ]   - Adhere to the [single responsibility principle](https://dev-gang.ru/article/solid-%C2%ABs%C2%BB-princip-edinstvennoi-objazannosti-lblgrj8yjb/). Separate the logic of rendering and data processing, ideally to separate files.
 - [x]   - Give variables and functions [descriptive names](https://github.com/airbnb/javascript#naming-conventions).
 
 The goal of the task is to let you get better acquainted with the JavaScript language and browser DOM API. If you don’t know some of the APIs needed for the task, you might use these resources as references:
@@ -18,14 +18,14 @@ The goal of the task is to let you get better acquainted with the JavaScript lan
 
 While working on your task you should utilize all of the following:
 - [x] 1. JavaScript
-- [x]  - Import / export 
-- [x]  - Array methods: map, reduce, filter (some of them)
-- [x]  - Array spread operator
-- [x]  - Regular expressions
-- [x]  - Try / catch
+- [x]   - Import / export 
+- [x]   - Array methods: map, reduce, filter (some of them)
+- [x]   - Array spread operator
+- [x]   - Regular expressions
+- [x]   - Try / catch
 - [x] 2. DOM API
-- [x]  - document.querySelector
-- [x]  - document.addEventListener
+- [x]   - document.querySelector
+- [x]   - document.addEventListener
 
 Another skill you should practice is working with Git and Github. Implement the following git requirements while working on the task:
 - [x] 1. Make at least 3 commits
